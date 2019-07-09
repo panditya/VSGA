@@ -1,6 +1,7 @@
 package com.panditya.vsga;
 
-import android.graphics.Color;
+import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,8 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.profileMenuItem) {
-            Toast.makeText(this, "Hmm nothing to show about your profile", Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.profileMenuItem:
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.signOutMenuItem:
+                Toast.makeText(this, "Hmm nothing to show about your profile", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
