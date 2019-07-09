@@ -8,109 +8,158 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="36dp"
+                android:src="@drawable/dts_logo" />
+
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:id="@+id/calculatorLabelTextView"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="well hello people"
-                android:visibility="visible"
-                tools:visibility="visible" />
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center"
+                android:lineSpacingExtra="14sp"
+                android:text="Calculator"
+                android:textSize="30sp" />
 
             <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
+                android:id="@+id/firstValueText"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:gravity="center|center_vertical"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/operatorLabelTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center"
+                android:lineSpacingExtra="14sp"
+                android:text=""
+                android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/editText3"
-                android:layout_width="match_parent"
+                android:id="@+id/secondValueText"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="24dp"
                 android:ems="10"
-                android:inputType="textEmailAddress" />
+                android:gravity="center"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/editText2"
+            <TextView
+                android:id="@+id/resultLabelTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="16sp"
+                android:text="Result"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/resultTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="16sp"
+                android:text="0"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/selectOperationLabelTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:lineSpacingExtra="14sp"
+                android:text="Select the operation"
+                android:textSize="20sp" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword" />
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/summationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="#6BABEB"
+                    android:text="+" />
+
+                <Button
+                    android:id="@+id/reductionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="#6BABEB"
+                    android:text="-" />
+
+                <Button
+                    android:id="@+id/multiplicationButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="#6BABEB"
+                    android:text="x" />
+
+                <Button
+                    android:id="@+id/divisionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_weight="1"
+                    android:background="#6BABEB"
+                    android:text="/" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
+                android:id="@+id/calculateButton"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="36dp"
+                android:background="#6BABEB"
+                android:gravity="center"
+                android:text="Calculate" />
 
-            <ToggleButton
-                android:id="@+id/toggleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ToggleButton" />
-
-            <SearchView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="CheckBox" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Switch" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <RadioButton
-                    android:id="@+id/radioButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="RadioButton" />
-
-                <RadioButton
-                    android:id="@+id/radioButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="RadioButton" />
-
-            </RadioGroup>
         </LinearLayout>
     </ScrollView>
 
