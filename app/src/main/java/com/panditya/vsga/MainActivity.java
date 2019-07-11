@@ -1,66 +1,39 @@
 package com.panditya.vsga;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("Lifecycle Flow", "onCreate");
 
-        Button button = findViewById(R.id.signUpButton);
-        button.setOnClickListener(this);
+        listView = findViewById(R.id.listView);
+        final String[] countriesName = new String[]{"Indonesia", "Singapore", "Australia", "Japan"};
+
+        ArrayAdapter<String> listViewDataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_expandable_list_item_1,
+                android.R.id.text1,
+                countriesName
+        );
+        listView.setAdapter(listViewDataAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, countriesName[position], Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d("Lifecycle Flow", "onStart");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("Lifecycle Flow", "onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("Lifecycle Flow", "onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d("Lifecycle Flow", "onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("Lifecycle Flow", "onDestroy");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("Lifecycle Flow", "onRestart");
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.signUpButton:
-                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
-                break;
-        }
-    }
 }
