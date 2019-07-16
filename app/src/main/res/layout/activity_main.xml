@@ -1,46 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:orientation="vertical">
+    <ListView
+        android:id="@+id/notesListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|center_vertical"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="36dp"
-                android:src="@drawable/dts_logo" />
-
-            <Button
-                android:id="@+id/internalStorageButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
-                android:text="Internal Storage" />
-
-            <Button
-                android:id="@+id/externalStorageButton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
-                android:text="External Storage" />
-
-        </LinearLayout>
-    </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
