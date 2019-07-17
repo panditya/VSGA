@@ -1,59 +1,119 @@
 package com.panditya.vsga;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
-import com.panditya.vsga.student.Student;
-import com.panditya.vsga.student.StudentRepository;
+import com.panditya.vsga.user.User;
+import com.panditya.vsga.user.UserAdapter;
+import com.panditya.vsga.user.UserRepository;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button storeButton, viewAllStudentButton;
-    EditText studentNameEditText, studentHobbyEditText, studentAddressEditText;
-    TextView studentsTextView;
-    StudentRepository repository;
+    MenuInflater menuInflater;
+    FloatingActionButton addFab;
+    ListView usersListView;
+    UserRepository userRepository;
+    UserAdapter userAdapter;
+    ArrayList usersList;
+
+    protected void onLoad(ArrayList users) {
+        userAdapter = new UserAdapter(this, 0, users);
+        userAdapter.notifyDataSetChanged();
+        usersListView.setAdapter(userAdapter);
+    }
+
+    protected void onAlert(final User user) {
+        new AlertDialog
+                .Builder(this)
+                .setTitle("Delete?")
+                .setMessage("Are you sure want to delete " + user.getName() + " ?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        userRepository.delete(user);
+                        Toast.makeText(MainActivity.this, user.getName() + " successfully deleted.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
+
+        this.onLoad(usersList);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        repository = new StudentRepository(this);
+        userRepository = new UserRepository(this);
+        usersList = userRepository.getAll(null, null);
 
-        studentsTextView = findViewById(R.id.studentsTextView);
+        usersListView = findViewById(R.id.usersListView);
 
-        studentNameEditText = findViewById(R.id.studentNameEditText);
-        studentHobbyEditText = findViewById(R.id.studentHobbyEditText);
-        studentAddressEditText = findViewById(R.id.studentAddressEditText);
+        usersListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = (User)parent.getAdapter().getItem(position);
 
-        storeButton = findViewById(R.id.storeButton);
-        storeButton.setOnClickListener(this);
+                onAlert(user);
 
-        viewAllStudentButton = findViewById(R.id.viewAllStudentButton);
-        viewAllStudentButton.setOnClickListener(this);
+                return true;
+            }
+        });
+
+        addFab = findViewById(R.id.addFab);
+        addFab.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.onLoad(usersList);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.storeButton:
-                Log.d("INSET_STUDENT", "onClick: " + studentNameEditText.getText().toString());
-                repository.insert(new Student(0, studentNameEditText.getText().toString(), studentHobbyEditText.getText().toString(), studentAddressEditText.getText().toString()));
-                break;
-            case R.id.viewAllStudentButton:
-                ArrayList<Student> students = repository.getAllStudnetsList();
-                for (int i = 0; i < students.size(); i++) {
-                    studentsTextView.setText(studentsTextView.getText().toString() + ", " + students.get(i));
-                    Log.d("student", students.get(i).toString());
-                }
+            case R.id.addFab:
+                startActivity(new Intent(MainActivity.this, AddDataActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.option_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.orderAscMenuItem:
+                this.onLoad(userRepository.getAll("ASC", null));
+                break;
+            case R.id.orderDescMenuItem:
+                this.onLoad(userRepository.getAll("DESC", null));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
