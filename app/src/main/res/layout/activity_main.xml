@@ -7,17 +7,60 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <TextView
+        android:id="@+id/studentNameLabelTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"/>
+        android:text="Name" />
 
-    <ListView
-        android:id="@+id/notesListView"
+    <EditText
+        android:id="@+id/studentNameEditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
+    <TextView
+        android:id="@+id/studentHobbyLabelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hobby" />
+
+    <EditText
+        android:id="@+id/studentHobbyEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/studentAddressLabelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Student Name" />
+
+    <EditText
+        android:id="@+id/studentAddressEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/storeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Store" />
+
+    <Button
+        android:id="@+id/viewAllStudentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View All Student" />
+
+    <TextView
+        android:id="@+id/studentsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 </LinearLayout>
