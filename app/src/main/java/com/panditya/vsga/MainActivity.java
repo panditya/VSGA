@@ -28,9 +28,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     UserRepository userRepository;
     UserAdapter userAdapter;
     ArrayList usersList;
+    String order;
+    Integer limit;
 
-    protected void onLoad(ArrayList users) {
-        userAdapter = new UserAdapter(this, 0, users);
+    protected void onLoad() {
+        usersList = userRepository.getAll(null, null);
+        userAdapter = new UserAdapter(this, 0, usersList);
         userAdapter.notifyDataSetChanged();
         usersListView.setAdapter(userAdapter);
     }
@@ -46,12 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onClick(DialogInterface dialog, int which) {
                         userRepository.delete(user);
                         Toast.makeText(MainActivity.this, user.getName() + " successfully deleted.", Toast.LENGTH_SHORT).show();
+                        onLoad();
                     }
                 })
                 .setNegativeButton(android.R.string.no, null)
                 .show();
-
-        this.onLoad(usersList);
     }
 
     @Override
@@ -63,13 +65,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         usersList = userRepository.getAll(null, null);
 
         usersListView = findViewById(R.id.usersListView);
+        usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = (User)parent.getAdapter().getItem(position);
 
+                startActivity(new Intent(MainActivity.this, AddDataActivity.class)
+                        .putExtra("id", user.getId())
+                        .putExtra("name", user.getName())
+                        .putExtra("address", user.getAddress())
+                );
+            }
+        });
         usersListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = (User)parent.getAdapter().getItem(position);
 
                 onAlert(user);
+                onLoad();
 
                 return true;
             }
@@ -83,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
 
-        this.onLoad(usersList);
+        this.onLoad();
     }
 
     @Override
@@ -107,10 +121,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.orderAscMenuItem:
-                this.onLoad(userRepository.getAll("ASC", null));
+                order = "ASC";
+                this.onLoad();
                 break;
             case R.id.orderDescMenuItem:
-                this.onLoad(userRepository.getAll("DESC", null));
+                order = "DESC";
+                this.onLoad();
                 break;
         }
 

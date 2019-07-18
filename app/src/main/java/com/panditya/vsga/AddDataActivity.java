@@ -12,10 +12,25 @@ import com.panditya.vsga.user.UserRepository;
 
 public class AddDataActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Bundle bundle;
     Button submitButton, cancelButton;
     EditText nameEditText, addressEditText;
     UserRepository userRepository;
+    User user;
     String name, address;
+
+    public void onLoad(Bundle bundle) {
+        Integer id = bundle.getInt("id");
+        String name = bundle.getString("name");
+        String address = bundle.getString("address");
+
+        nameEditText.setText(name);
+        addressEditText.setText(address);
+
+        user.setId(id);
+        user.setName(name);
+        user.setAddress(address);
+    }
 
     public void onReset() {
         nameEditText.setText("");
@@ -26,13 +41,18 @@ public class AddDataActivity extends AppCompatActivity implements View.OnClickLi
         name = nameEditText.getText().toString();
         address = addressEditText.getText().toString();
 
-        User user = new User();
         user.setName(name);
         user.setAddress(address);
 
-        userRepository.insert(user);
+        if (user.getId() == null) {
+            userRepository.insert(user);
 
-        Toast.makeText(this, user.getName() + " successfully added.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, user.getName() + " successfully added.", Toast.LENGTH_SHORT).show();
+        }
+
+        userRepository.update(user);
+
+        Toast.makeText(this, user.getName() + " successfully updated.", Toast.LENGTH_SHORT).show();
 
         this.onReset();
     }
@@ -42,6 +62,8 @@ public class AddDataActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_data);
 
+        bundle = getIntent().getExtras();
+        user = new User();
         userRepository = new UserRepository(this);
 
         nameEditText = findViewById(R.id.nameEditText);
@@ -53,6 +75,11 @@ public class AddDataActivity extends AppCompatActivity implements View.OnClickLi
         cancelButton = findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(this);
 
+        if (bundle != null) {
+            this.onLoad(bundle);
+        } else {
+            this.onReset();
+        }
     }
 
     @Override

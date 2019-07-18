@@ -33,7 +33,7 @@ public class UserRepository extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insert(User user) {
+    public boolean insert(User user) {
         db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -42,18 +42,25 @@ public class UserRepository extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_NAME, null, values);
 
-        return id;
+        return id > 0;
     }
 
-    public long update(User user) {
-        //
+    public boolean update(User user) {
+        db = this.getWritableDatabase();
 
-        return 0;
+        ContentValues values = new ContentValues();
+        values.put("id", user.getId());
+        values.put("name", user.getName());
+        values.put("address", user.getAddress());
+
+        long id = db.update(TABLE_NAME, values, "id = ?", new String[]{user.getId().toString()});
+
+        return id > 0;
     }
 
     public boolean delete(User user) {
         db = this.getWritableDatabase();
-        long id = db.delete(TABLE_NAME, "name = ?", new String[]{user.getName()});
+        long id = db.delete(TABLE_NAME, "id = ?", new String[]{user.getId().toString()});
 
         return id > 0;
     }
@@ -83,10 +90,12 @@ public class UserRepository extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
+                Integer id = cursor.getInt(cursor.getColumnIndex("id"));
                 String name = cursor.getString(cursor.getColumnIndex("name"));
                 String address = cursor.getString(cursor.getColumnIndex("address"));
 
                 User user = new User();
+                user.setId(id);
                 user.setName(name);
                 user.setAddress(address);
 
